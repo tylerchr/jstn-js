@@ -1,0 +1,28 @@
+{
+	"env": {
+		"commonjs": {
+			"plugins": ["transform-es2015-modules-commonjs"],
+			"presets": [
+				["env", {
+					"useBuiltIns": false,
+					"targets": {
+						"node": "current",
+						"browsers": [ "last 2 major versions" ]
+					}		
+				}]
+			]
+		},
+		"es": {
+			"presets": [
+				["env", {
+					"useBuiltIns": false,
+					"modules": false,
+					"targets": {
+						"node": "current",
+						"browsers": [ "last 2 major versions" ]
+					}		
+				}]
+			]
+		}
+	}
+}

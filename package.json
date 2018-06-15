@@ -1,0 +1,50 @@
+{
+  "name": "jstn",
+  "version": "0.0.1",
+  "description": "a javascript tokenizer for jstn",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "files": [
+    "dist/es",
+    "dist/lib",
+    "dist/umd"
+  ],
+  "scripts": {
+    "prepare": "npm run clean && npm test && npm run build",
+    "clean": "rimraf dist",
+    "build": "npm run build:commonjs && npm run build:es && npm run build:umd",
+    "build:commonjs": "BABEL_ENV=commonjs babel --ignore '*.test.js' ./src --out-dir ./dist/lib",
+    "build:commonjs:watch": "npm run build:commonjs -- --watch",
+    "build:es": "BABEL_ENV=es babel --ignore '*.test.js' ./src --out-dir ./dist/es",
+    "build:es:watch": "npm run build:es -- --watch",
+    "build:umd": "npm run build:umd:full && npm run build:umd:min",
+    "build:umd:full": "BABEL_ENV=es NODE_ENV=development rollup --config",
+    "build:umd:min": "BABEL_ENV=es NODE_ENV=production rollup --config",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src --ext .js",
+    "test": "NODE_ENV=commonjs jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/tylerchr/jstn-js"
+  },
+  "keywords": [
+    "jstn"
+  ],
+  "author": "tyler9xp@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^23.0.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.12.0",
+    "jest": "^23.1.0",
+    "rollup": "^0.60.7",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-uglify": "^4.0.0",
+    "rollup-watch": "^4.3.1"
+  }
+}
