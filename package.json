@@ -1,6 +1,6 @@
 {
   "name": "jstn",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a javascript tokenizer for jstn",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
@@ -32,7 +32,7 @@
     "jstn"
   ],
   "author": "tyler9xp@gmail.com",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
