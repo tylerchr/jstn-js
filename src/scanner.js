@@ -61,7 +61,7 @@ class Tokenizer {
 
 	tokens() {
 		let tokens = [];
-		while (true) {
+		for (;;) {
 			let token = this.scan();
 			if (token.Token === EOF) {
 				break;
