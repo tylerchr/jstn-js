@@ -1,6 +1,6 @@
 {
   "name": "jstn",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a javascript tokenizer and parser for jstn",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
@@ -38,6 +38,7 @@
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^23.0.1",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-preset-env": "^1.7.0",
     "eslint": "^4.19.1",

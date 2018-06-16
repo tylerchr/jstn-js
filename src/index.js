@@ -1,3 +1,4 @@
+import Parser from './parser.js';
 import Tokenizer from './scanner.js';
 
-export { Tokenizer }
+export { Parser, Tokenizer }
