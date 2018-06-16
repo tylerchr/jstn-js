@@ -1,6 +1,6 @@
 {
   "name": "jstn",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "a javascript tokenizer and parser for jstn",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
@@ -19,8 +19,8 @@
     "build:es": "BABEL_ENV=es babel --ignore '*.test.js' ./src --out-dir ./dist/es",
     "build:es:watch": "npm run build:es -- --watch",
     "build:umd": "npm run build:umd:full && npm run build:umd:min",
-    "build:umd:full": "BABEL_ENV=es NODE_ENV=development rollup --config",
-    "build:umd:min": "BABEL_ENV=es NODE_ENV=production rollup --config",
+    "build:umd:full": "BABEL_ENV=umd NODE_ENV=development rollup --config",
+    "build:umd:min": "BABEL_ENV=umd NODE_ENV=production rollup --config",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src --ext .js",
     "test": "NODE_ENV=commonjs jest --config jest.config.js"

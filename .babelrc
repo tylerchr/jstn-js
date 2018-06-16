@@ -13,6 +13,18 @@
 			]
 		},
 		"es": {
+			"presets": [
+				["env", {
+					"useBuiltIns": false,
+					"modules": false,
+					"targets": {
+						"node": "current",
+						"browsers": [ "last 1 major versions", "not dead", "not ie 6-11" ]
+					}
+				}]
+			]
+		},
+		"umd": {
 			"plugins": ["external-helpers"],
 			"presets": [
 				["env", {
