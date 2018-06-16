@@ -7,7 +7,7 @@
 					"useBuiltIns": false,
 					"targets": {
 						"node": "current",
-						"browsers": [ "last 2 major versions" ]
+						"browsers": [ "last 1 major versions", "not dead", "not ie 6-11" ]
 					}		
 				}]
 			]
@@ -19,7 +19,7 @@
 					"modules": false,
 					"targets": {
 						"node": "current",
-						"browsers": [ "last 2 major versions" ]
+						"browsers": [ "last 1 major versions", "not dead", "not ie 6-11" ]
 					}		
 				}]
 			]

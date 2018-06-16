@@ -15,6 +15,25 @@ const COLON = "COLON";
 const SEMICOLON = "SEMICOLON";
 const QUESTION = "QUESTION";
 
+const Tokens = {
+	ILLEGAL,
+	EOF,
+	WHITESPACE,
+	NEWLINE,
+	IDENT,
+	STRING,
+	NUMBER,
+	BOOLEAN,
+	NULL,
+	CURLYOPEN,
+	CURLYCLOSE,
+	SQUAREOPEN,
+	SQUARECLOSE,
+	COLON,
+	SEMICOLON,
+	QUESTION
+};
+
 const Token = (t, str) => { return { Token: t, Value: str }; }
 
 const isWhitespace = (char) => { return char == " " || char == "\t" };
@@ -40,14 +59,16 @@ class Tokenizer {
 		this.index--;
 	}
 
-	*tokens() {
+	tokens() {
+		let tokens = [];
 		while (true) {
 			let token = this.scan();
 			if (token.Token === EOF) {
-				return;
+				break;
 			}
-			yield token;
+			tokens.push(token);
 		}
+		return tokens;
 	}
 
 	scan() {
@@ -125,3 +146,5 @@ class Tokenizer {
 }
 
 export default Tokenizer;
+
+export { Tokens };

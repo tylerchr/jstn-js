@@ -14,10 +14,7 @@ test('tokenizing sample text works', () => {
 	}
 	`
 
-	let tokens = [];
-	for (let token of new Tokenizer(writtenCollectionSchema).tokens()) {
-		tokens.push(token);
-	}
+	let tokens = new Tokenizer(writtenCollectionSchema).tokens();
 
 	let expectation = [
 		{ Token: 'CURLYOPEN', Value: '{' },
