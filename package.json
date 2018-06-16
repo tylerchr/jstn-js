@@ -1,9 +1,10 @@
 {
   "name": "jstn",
-  "version": "0.0.2",
-  "description": "a javascript tokenizer for jstn",
+  "version": "0.1.0",
+  "description": "a javascript tokenizer and parser for jstn",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
+  "unpkg": "dist/umd/jstn-js.min.js",
   "files": [
     "dist/es",
     "dist/lib",
@@ -22,7 +23,7 @@
     "build:umd:min": "BABEL_ENV=es NODE_ENV=production rollup --config",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src --ext .js",
-    "test": "NODE_ENV=commonjs jest"
+    "test": "NODE_ENV=commonjs jest --config jest.config.js"
   },
   "repository": {
     "type": "git",
