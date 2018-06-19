@@ -91,7 +91,7 @@ class Parser {
 				this.unscan();
 				return this.parseObject();
 			default:
-				throw new Error("unexpected token: " + token.Token);
+				throw new Error("unexpected token: " + token.Token + "(" + token.Value + ")");
 		}
 	}
 
