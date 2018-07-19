@@ -1,3 +1,5 @@
+import generate from './generator.js';
+
 import {
 	isValidString,
 	isValidNumber,
@@ -30,6 +32,8 @@ class JSTNType {
 			this.Items = items;
 		}
 	}
+
+	toJSON() { return generate(this); }
 
 }
 
