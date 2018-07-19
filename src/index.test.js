@@ -3,6 +3,7 @@ import jstn, { Parser, Tokenizer, isValid } from './index.js';
 import parse, { Parser as ParserOriginal } from './parser.js';
 import TokenizerOriginal from './scanner.js';
 import { isValid as isValidOriginal } from './validator.js';
+import generate from './generator.js';
 import Types, { JSTNType, Kinds } from './type.js';
 
 describe('default export', () => {
@@ -11,6 +12,13 @@ describe('default export', () => {
 
 		expect(typeof parse).toBe('function');
 		expect(jstn).toHaveProperty('parse', parse);
+
+	});
+
+	test('includes generate function', () => {
+
+		expect(typeof generate).toBe('function');
+		expect(jstn).toHaveProperty('generate', generate);
 
 	});
 
