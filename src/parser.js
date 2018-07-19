@@ -1,13 +1,5 @@
 import Tokenizer, { Tokens } from './scanner.js';
-
-const Kinds = {
-	String: "String",
-	Number: "Number",
-	Boolean: "Boolean",
-	Null: "Null",
-	Object: "Object",
-	Array: "Array"
-};
+import Types from './type.js';
 
 // Can't properly extend builtin types, so we create this custom error
 // type manually (see https://babeljs.io/docs/en/caveats/#classes).
@@ -77,13 +69,13 @@ class Parser {
 
 		switch (token.Token) {
 			case Tokens.STRING:
-				return {Kind: Kinds.String}
+				return new Types.JSTNString();
 			case Tokens.NUMBER:
-				return {Kind: Kinds.Number}
+				return new Types.JSTNNumber();
 			case Tokens.BOOLEAN:
-				return {Kind: Kinds.Boolean}
+				return new Types.JSTNBoolean();
 			case Tokens.NULL:
-				return {Kind: Kinds.Null}
+				return new Types.JSTNNull();
 			case Tokens.SQUAREOPEN:
 				this.unscan();
 				return this.parseArray();
@@ -111,7 +103,7 @@ class Parser {
 		token = this.scanIgnoreWhitespace(true);
 		this.assertToken(token, Tokens.SQUARECLOSE);
 
-		return {Kind: Kinds.Array, Items: childType}
+		return new Types.JSTNArray(childType);
 
 	}
 
@@ -154,7 +146,7 @@ class Parser {
 
 		this.assertToken(this.scanIgnoreWhitespace(true), Tokens.CURLYCLOSE);
 
-		return {Kind: Kinds.Object, Properties: props}
+		return new Types.JSTNObject(props);
 
 	}
 
@@ -166,6 +158,10 @@ class Parser {
 
 }
 
-export default Parser;
+function parse(schema) {
+	return (new Parser(schema)).parseType();
+}
 
-export { Kinds, ParseError };
+export { Parser, ParseError };
+
+export default parse;

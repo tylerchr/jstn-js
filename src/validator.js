@@ -1,16 +1,5 @@
-import { Kinds } from './parser.js';
-
-const validators = {
-	[Kinds.String]: isValidString,
-	[Kinds.Number]: isValidNumber,
-	[Kinds.Boolean]: isValidBoolean,
-	[Kinds.Null]: isValidNull,
-	[Kinds.Array]: isValidArray,
-	[Kinds.Object]: isValidObject,
-}
-
 function isValid(type, jsValue) {
-	return validators[type.Kind] ? validators[type.Kind](type, jsValue) : false;
+	return type.validate(jsValue);
 }
 
 function isValidString(type, jsValue) {
