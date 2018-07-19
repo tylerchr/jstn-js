@@ -1,17 +1,16 @@
-import Parser, { Kinds, ParseError } from './parser.js';
+import parse, { Parser, ParseError } from './parser.js';
+import Types from './type.js';
 
 describe('string', () => {
 
 	test('parses', () => {
-		let parser = new Parser("string");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.String });
+		let type = parse("string");
+		expect(type).toEqual(new Types.JSTNString());
 	});
 
 	test('parses with optional', () => {
-		let parser = new Parser("string?");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.String, Optional: true });
+		let type = parse("string?");
+		expect(type).toEqual(new Types.JSTNString(true));
 	});
 
 });
@@ -19,15 +18,13 @@ describe('string', () => {
 describe('number', () => {
 
 	test('parses', () => {
-		let parser = new Parser("number");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Number });
+		let type = parse("number");
+		expect(type).toEqual(new Types.JSTNNumber());
 	});
 
 	test('parses with optional', () => {
-		let parser = new Parser("number?");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Number, Optional: true });
+		let type = parse("number?");
+		expect(type).toEqual(new Types.JSTNNumber(true));
 	});
 
 });
@@ -35,15 +32,13 @@ describe('number', () => {
 describe('boolean', () => {
 
 	test('parses', () => {
-		let parser = new Parser("boolean");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Boolean });
+		let type = parse("boolean");
+		expect(type).toEqual(new Types.JSTNBoolean());
 	});
 
 	test('parses with optional', () => {
-		let parser = new Parser("boolean?");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Boolean, Optional: true });
+		let type = parse("boolean?");
+		expect(type).toEqual(new Types.JSTNBoolean(true));
 	});
 
 });
@@ -51,15 +46,13 @@ describe('boolean', () => {
 describe('null', () => {
 
 	test('parses', () => {
-		let parser = new Parser("null");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Null });
+		let type = parse("null");
+		expect(type).toEqual(new Types.JSTNNull());
 	});
 
 	test('parses with optional', () => {
-		let parser = new Parser("null?");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Null, Optional: true });
+		let type = parse("null?");
+		expect(type).toEqual(new Types.JSTNNull(true));
 	});
 
 });
@@ -67,32 +60,23 @@ describe('null', () => {
 describe('array', () => {
 
 	test('parses', () => {
-		let parser = new Parser("[]");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Array });
+		let type = parse("[]");
+		expect(type).toEqual(new Types.JSTNArray());
 	});
 
 	test('parses with optional', () => {
-		let parser = new Parser("[]?");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Array, Optional: true });
+		let type = parse("[]?");
+		expect(type).toEqual(new Types.JSTNArray(undefined, true));
 	});
 
 	test('parses with child', () => {
-		let parser = new Parser("[string]");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Array, Items: {
-			Kind: Kinds.String
-		} });
+		let type = parse("[string]");
+		expect(type).toEqual(new Types.JSTNArray(new Types.JSTNString()));
 	});
 
 	test('parses with optional child', () => {
-		let parser = new Parser("[string?]");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Array, Items: {
-			Kind: Kinds.String,
-			Optional: true
-		} });
+		let type = parse("[string?]");
+		expect(type).toEqual(new Types.JSTNArray(new Types.JSTNString(true)));
 	});
 
 });
@@ -100,31 +84,27 @@ describe('array', () => {
 describe('object', () => {
 
 	test('parses', () => {
-		let parser = new Parser("{}");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Object, Properties: {} });
+		let type = parse("{}");
+		expect(type).toEqual(new Types.JSTNObject());
 	});
 
 	test('parses with optional', () => {
-		let parser = new Parser("{}?");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Object, Optional: true, Properties: {} });
+		let type = parse("{}?");
+		expect(type).toEqual(new Types.JSTNObject({}, true));
 	});
 
 	test('parses with property', () => {
-		let parser = new Parser("{countryCode: string}");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Object, Properties: {
-			"countryCode": {Kind: Kinds.String}
-		} });
+		let type = parse("{countryCode: string}");
+		expect(type).toEqual(new Types.JSTNObject({
+			"countryCode": new Types.JSTNString(),
+		}));
 	});
 
 	test('parses with optional property', () => {
-		let parser = new Parser("{countryCode: string?}");
-		let type = parser.parseType();
-		expect(type).toEqual({ Kind: Kinds.Object, Properties: {
-			"countryCode": {Kind: Kinds.String, Optional: true}
-		} });
+		let type = parse("{countryCode: string?}");
+		expect(type).toEqual(new Types.JSTNObject({
+			"countryCode": new Types.JSTNString(true),
+		}));
 	});
 
 	test('fails to parse with bad syntax', () => {
@@ -143,16 +123,16 @@ describe('standard cases', () => {
 	year:     number?;
 	classic:boolean;}]}`;
 
-		let parser = new Parser(text);
-		let type = parser.parseType();
-		expect(type).toEqual({Kind: Kinds.Object, Properties: {
-			"author": {Kind: Kinds.String},
-			"works": {Kind: Kinds.Array, Items: {Kind: Kinds.Object, Properties: {
-				"title":   {Kind: Kinds.String},
-				"year":    {Kind: Kinds.Number, Optional: true},
-				"classic": {Kind: Kinds.Boolean},
-			}}}
-		}});
+		let type = parse(text);
+
+		expect(type).toEqual(new Types.JSTNObject({
+			"author": new Types.JSTNString(),
+			"works": new Types.JSTNArray(new Types.JSTNObject({
+				"title": new Types.JSTNString(),
+				"year": new Types.JSTNNumber(true),
+				"classic": new Types.JSTNBoolean(),
+			})),
+		}));
 
 	});
 

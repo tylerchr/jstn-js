@@ -1,4 +1,4 @@
-import Parser from './parser.js';
+import { Parser } from './parser.js';
 import {
 	isValid,
 	isValidString,
@@ -65,6 +65,10 @@ describe('string', () => {
 
 	test('validates', () => {
 		expect(isValidString(stringType, someString)).toEqual(true);
+	});
+
+	test('validates generically', () => {
+		expect(isValid(stringType, someString)).toEqual(true);
 	});
 
 	test('doesn\'t validate with boolean', () => {
